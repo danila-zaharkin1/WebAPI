@@ -1,28 +1,28 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Contracts;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-namespace WebApplication.Controllers
+[Route("[controller]")]
+[ApiController]
+public class WeatherForecastController : ControllerBase
 {
-    [Route("[controller]")]
-    [ApiController]
-    public class WeatherForecastController : ControllerBase
+    private readonly IRepositoryManager _repository;
+    private Company _company;
+    private Employee _employee;
+    public WeatherForecastController(IRepositoryManager repository)
     {
-        private ILoggerManager _logger;
-        public WeatherForecastController(ILoggerManager logger)
-        {
-        _logger = logger;
-        }
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            _logger.LogInfo("¬от информационное сообщение от нашего контроллера значений.");
-           
-            _logger.LogDebug("¬от отладочное сообщение от нашего контроллера значений.");
-           
-            _logger.LogWarn("¬от сообщение предупреждени€ от нашего контроллера значений.");
-           
-            _logger.LogError("¬от сообщение об ошибке от нашего контроллера значений.");
+        _repository = repository;
+    }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<string>> Get()
+    {
+        _repository.Company.UpdateCompany(_company);
+        _repository.Employee.CreateEmployee(_employee);
         return new string[] { "value1", "value2" };
-        }
     }
 }
