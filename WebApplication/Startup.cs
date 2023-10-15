@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
-using ShopApi.Extensions;
+using WebApplication.Extensions;
 
 namespace ShopApi;
 
@@ -9,7 +9,7 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(),
-            "/nlog.config"));
+        "/nlog.config"));
         Configuration = configuration;
     }
 
@@ -21,11 +21,10 @@ public class Startup
         services.ConfigureCors();
         services.ConfigureIISIntegration();
         services.ConfigureLoggerService();
-
         services.AddControllers();
-        services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
     }
+
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -35,6 +34,9 @@ public class Startup
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI();
+        }
+        {
+
         }
 
         app.UseHttpsRedirection();
