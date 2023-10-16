@@ -15,5 +15,6 @@ namespace Repository
         : base(repositoryContext)
         {
         }
+        public void UpdateCommand(Command command) => Update(command);
     }
 }
